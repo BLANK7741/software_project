@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty-Course</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 40%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        form {
+            border: 2px solid #0000001e;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-left: 30px;
+        }
+
+        input[type="text"] {
+            width: 45%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #0b0000;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #406cee;
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #5f74b8;
+        }
+
+        .course-entry {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .course-entry input[type="text"] {
+            width: 45%;
+        }
+
+        /* Style for the Remove button */
+        .removeCourseButton {
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-course {
+            font-size: large;
+            font-weight: 100;
+            text-align: left;
+            background-position: 0cm;
+        }
+
+        .add-batch-button {
+            background-color: #009688;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>faculty-course</h1>
+        <div class="button-course">
+            <select name="batchName" id="batchNameDropdown">
+                <option value="Faculty F1">faculty F1</option>
+                <option value="faculty F2">faculty F2</option>
+                <option value="faculty F3">faculty F3</option>
+                <option value="faculty F4">faculty F4</option>
+                <option value="faculty F5">faculty F5</option>
+                <option value="faculty F6">faculty F6</option>
+            </select>
+        </div>
+
+        <div id="faculty-course-forms">
+        </div>
+
+        <div class="button-container">
+            <input type="button" value="Add More" id="addFacultyCourseButton">
+            <input type="submit" value="Submit">
+        </div>
+
+        <div class="button-container">
+            <input type="button" value="Add More Faculty" id="addBatchButton" class="add-batch-button">
+        </div>
+    </div>
+
+    <script>
+        // Function to create a new Faculty and Course form
+        function createFacultyCourseForm() {
+            const facultyCourseForm = document.createElement('form');
+            facultyCourseForm.className = 'faculty-course-form';
+
+            const courseEntry = document.createElement('div');
+            courseEntry.className = 'course-entry';
+            courseEntry.innerHTML = `
+                <label for="facultyName">Course:</label>
+                <input type="text" name="facultyName[]" required placeholder="Enter Course Name">
+
+                <input type="button" value="Remove" class="removeCourseButton">
+            `;
+
+            facultyCourseForm.appendChild(courseEntry);
+
+            // Add an event listener to remove the form
+            const removeButton = courseEntry.querySelector('.removeCourseButton');
+            removeButton.addEventListener('click', function() {
+                facultyCourseForm.remove();
+            });
+
+            return facultyCourseForm;
+        }
+
+        // For dynamically adding faculty and course forms
+        document.getElementById('addFacultyCourseButton').addEventListener('click', function() {
+            const facultyCourseForms = document.getElementById('faculty-course-forms');
+            const newFacultyCourseForm = createFacultyCourseForm();
+            facultyCourseForms.appendChild(newFacultyCourseForm);
+        });
+
+        // For removing an existing faculty and course form
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.className == 'removeCourseButton') {
+                const facultyCourseForm = e.target.closest('.faculty-course-form');
+                if (facultyCourseForm) {
+                    facultyCourseForm.remove();
+                }
+            }
+        });
+
+        // Function to add a new batch input
+        function addBatchInput() {
+            const batchContainer = document.createElement('div');
+            batchContainer.className = 'batch-container';
+
+            // Add four blank lines before adding the batch
+            for (let i = 0; i < 2; i++) {
+                const blankLine = document.createElement('div');
+                blankLine.innerHTML = '<br>';
+                batchContainer.appendChild(blankLine);
+            }
+
+            const batchNameDropdown = document.createElement('select');
+            batchNameDropdown.name = "batchName";
+            batchNameDropdown.innerHTML = `
+                <option value="Faculty F1">Faculty F1</option>
+                <option value="Faculty F2">Faculty F2</option>
+                <option value="Faculty F3">Faculty F3</option>
+                <option value="Faculty F4">Faculty F4</option>
+                <option value="Faculty F5">Faculty F5</option>
+                <option value="Faculty F6">Faculty F6</option>
+            `;
+
+            batchContainer.appendChild(batchNameDropdown);
+            document.getElementById('faculty-course-forms').appendChild(batchContainer);
+        }
+
+        // Add event listener to the "Add More Batch" button
+        document.getElementById('addBatchButton').addEventListener('click', function() {
+            addBatchInput();
+        });
+    </script>
+</body>
+</html>

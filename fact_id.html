@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>faculty ID</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 55%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        form {
+            border: 2px solid #0000001e;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        input[type="text"] {
+            width: 45%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #0b0000;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #406cee;
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #5f74b8;
+        }
+
+        .course-entry {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .course-entry input[type="text"] {
+            width: 45%;
+        }
+
+        /* Style for the Remove button */
+        .removeCourseButton {
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-course {
+            font-size:large;
+            font-weight: 100;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Faculty ID</h1>
+
+        
+        <form action="#" method="post" id="courseForm">
+            <div class="course-entry">
+                <label for="facultyName">Faculty Name:</label>
+                <input type="text" name="facultyName[]" required placeholder="Enter Faculty Name">
+                <label for="courseName">Faculty ID:</label>
+                <input type="text" name="courseName[]" required placeholder="Enter Faculty ID">
+                <input type="button" value="Remove" class="removeCourseButton">
+            </div>
+
+            <div class="button-container">
+                <input type="button" value="Add more Faculty" id="addCourseButton">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // For dynamically adding faculty
+        document.getElementById('addCourseButton').addEventListener('click', function() {
+            const courseForm = document.getElementById('courseForm');
+            const courseEntry = document.querySelector('.course-entry').cloneNode(true);
+            const removeButton = courseEntry.querySelector('.removeCourseButton');
+            removeButton.addEventListener('click', function() {
+                courseForm.removeChild(courseEntry);
+            });
+            courseForm.insertBefore(courseEntry, document.querySelector('.button-container'));
+        });
+
+        // For removing an existing faculty entry
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.className == 'removeCourseButton') {
+                const courseForm = document.getElementById('courseForm');
+                const courseEntry = e.target.parentElement;
+                courseForm.removeChild(courseEntry);
+            }
+        });
+    </script>
+</body>
+</html>
